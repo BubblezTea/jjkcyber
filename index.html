@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JJK: CYBER VESSEL // FORGE OS</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="guiOverlay">
+  <div class="skb-panel" id="screen-create">
+    <div class="skb-hdr">
+      <div class="skb-hdr-left">
+        <span class="skb-corner-tag">JUJUTSU OS // NEURAL WEAVE STUDIO</span>
+        <span class="skb-title">// VESSEL FORGE //</span>
+      </div>
+    </div>
+    
+    <div class="skb-body">
+      <div class="skb-flow" id="builderFlow">
+        
+        <div class="skb-block active">
+          <div class="skb-bk-hdr">
+            <span class="skb-bk-num">①</span>
+            <div class="skb-bk-meta"><span class="skb-bk-label">IDENTITY</span><span class="skb-bk-sub">vessel designation</span></div>
+            <span class="skb-badge-req">REQUIRED</span>
+          </div>
+          <div class="skb-bk-body">
+            <div class="skb-field">
+              <label class="skb-lbl">DESIGNATION (NAME)</label>
+              <input class="skb-input" id="skbName" placeholder="Enter subject name..." value="Subject-001">
+            </div>
+          </div>
+        </div>
+        <div class="skb-wire"><div class="skb-wire-inner"></div></div>
+        
+        <div class="skb-block active">
+          <div class="skb-bk-hdr">
+            <span class="skb-bk-num">②</span>
+            <div class="skb-bk-meta"><span class="skb-bk-label">PHYSICAL BUILD</span><span class="skb-bk-sub">height & weight matrices</span></div>
+            <span class="skb-badge-req">DYNAMIC COST</span>
+          </div>
+          <div class="skb-bk-body">
+            <div class="skb-slider-group">
+              <div class="skb-slider-top">
+                <label class="skb-lbl">HEIGHT</label>
+                <div class="skb-val-badge"><span id="skbHeightVal">170</span><span class="skb-unit">cm</span></div>
+              </div>
+              <input class="skb-range" type="range" id="skbHeight" min="140" max="210" value="170">
+              <div class="skb-hint-line" id="skbHeightHint">Average height. Balanced stats.</div>
+            </div>
+            <div style="height: 10px;"></div>
+            <div class="skb-slider-group">
+              <div class="skb-slider-top">
+                <label class="skb-lbl">WEIGHT</label>
+                <div class="skb-val-badge"><span id="skbWeightVal">65</span><span class="skb-unit">kg</span></div>
+              </div>
+              <input class="skb-range" type="range" id="skbWeight" min="40" max="120" value="65">
+              <div class="skb-hint-line" id="skbWeightHint">Average weight. Balanced vitality.</div>
+            </div>
+          </div>
+        </div>
+        <div class="skb-wire"><div class="skb-wire-inner"></div></div>
+
+        <div class="skb-block active">
+          <div class="skb-bk-hdr">
+            <span class="skb-bk-num">③</span>
+            <div class="skb-bk-meta"><span class="skb-bk-label">LINEAGE</span><span class="skb-bk-sub">bloodline selection</span></div>
+            <span class="skb-badge-req">REQUIRED</span>
+          </div>
+          <div class="skb-bk-body">
+            <div class="skb-field">
+              <div style="display:flex; gap:10px; margin-bottom:10px;">
+                <button class="gui-btn active-tab-btn" id="btn-predef-clan" style="flex:1;" onclick="toggleCustom('clan', false)">KNOWN LINEAGE</button>
+                <button class="gui-btn" id="btn-custom-clan" style="flex:1;" onclick="toggleCustom('clan', true)">FORGE CLAN (-25 PTS)</button>
+              </div>
+              
+              <div id="panel-predef-clan">
+                <select class="skb-select" id="skbClan"></select>
+                <div class="skb-hint-line" id="skbClanHint" style="margin-top:4px;">No predefined lineage. Fate will decide.</div>
+              </div>
+              
+              <div id="panel-custom-clan" style="display:none; padding:10px; border:1px solid var(--border); background:var(--bg3);">
+                <input type="text" class="skb-input" id="customClanName" placeholder="Enter Clan Name" style="margin-bottom:10px;">
+                <label class="skb-lbl">CLAN TRAIT</label>
+                <select class="skb-select" id="customClanTrait">
+                  <option value="hp_ce">Endurance Bloodline (+HP, +CE)</option>
+                  <option value="str_spd">Warrior Bloodline (+STR, +SPD)</option>
+                  <option value="mst">Scholar Bloodline (++Mastery)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="skb-wire"><div class="skb-wire-inner"></div></div>
+
+        <div class="skb-block active">
+          <div class="skb-bk-hdr">
+            <span class="skb-bk-num">④</span>
+            <div class="skb-bk-meta"><span class="skb-bk-label">INNATE TECHNIQUE</span><span class="skb-bk-sub">cursed art alignment</span></div>
+            <span class="skb-badge-req">REQUIRED</span>
+          </div>
+          <div class="skb-bk-body">
+            <div class="skb-field">
+              <div style="display:flex; gap:10px; margin-bottom:10px;">
+                <button class="gui-btn active-tab-btn" id="btn-predef-tech" style="flex:1;" onclick="toggleCustom('tech', false)">KNOWN ARTS</button>
+                <button class="gui-btn" id="btn-custom-tech" style="flex:1;" onclick="toggleCustom('tech', true)">SYNTHESIZE TECH (-30 PTS)</button>
+              </div>
+
+              <div id="panel-predef-tech">
+                <select class="skb-select" id="skbTech"></select>
+                <div class="skb-hint-line" id="skbTechHint" style="margin-top:4px;">A technique will manifest naturally at age 5.</div>
+              </div>
+
+              <div id="panel-custom-tech" style="display:none; padding:10px; border:1px solid var(--border); background:var(--bg3);">
+                <input type="text" class="skb-input" id="customTechName" placeholder="Enter Technique Name" style="margin-bottom:10px;">
+                <label class="skb-lbl">TECHNIQUE ARCHETYPE</label>
+                <select class="skb-select" id="customTechTrait">
+                  <option value="damage">Destructive (High Damage Multiplier)</option>
+                  <option value="utility">Utility (Lower Cost, Evasion)</option>
+                  <option value="lethal">Lethal (High Crit Chance, High Cost)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="skb-wire"><div class="skb-wire-inner"></div></div>
+
+        <div class="skb-block purple-theme">
+          <div class="skb-bk-hdr">
+            <span class="skb-bk-num">⑤</span>
+            <div class="skb-bk-meta"><span class="skb-bk-label" style="color:var(--purple);">INNATE TRAITS</span><span class="skb-bk-sub">probability matrix</span></div>
+          </div>
+          <div class="skb-bk-body">
+            <div style="font-size:11px; color:var(--text-dim); line-height:1.6; padding:10px; background:rgba(191,0,255,0.05); border:1px solid var(--purple-dim);">
+              <span style="color:var(--purple);">SYSTEM NOTE:</span> Traits are assigned at birth via strict quantum probability. You cannot buy traits.<br><br>
+              • 1 Trait: 100% Guaranteed<br>
+              • 2 Traits: 25.0% Chance<br>
+              • 3 Traits: 0.0625% Chance<br>
+              • 4 Traits: 0.015625% Chance<br>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="skb-sidebar">
+        <div class="skb-section-lbl">// ALLOCATION MATRIX //</div>
+        
+        <div class="point-display">
+          <div class="point-title">POINTS REMAINING</div>
+          <div class="point-val" id="skbPoints">100</div>
+          <div style="font-size:9px; color:var(--text-lo); margin-top:8px;" id="godModeLabel">Awaiting final validation...</div>
+        </div>
+
+        <div class="skb-section-lbl">// VESSEL PREVIEW //</div>
+        <div class="skb-preview-area" id="skbPreviewArea"></div>
+
+        <div class="skb-forge-area">
+          <div class="skb-valid-line" id="skbValidLine">INITIALIZING...</div>
+          <button class="skb-forge-btn" id="skbForgeBtn" disabled>
+            <span id="forgeIcon">⚙</span> <span id="forgeText">SYNCHRONIZE & AWAKEN</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="screen-game">
+     <div style="padding:40px; text-align:center;">
+        <h1 style="color:var(--cyan); font-family:'VT323'; font-size:48px;">SYNCHRONIZATION COMPLETE</h1>
+        <p style="color:var(--text-dim); font-size:14px;">The vessel has been initialized. (Full Game Engine UI goes here).</p>
+     </div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
