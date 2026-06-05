@@ -1,133 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JUJUTSU CHRONICLES // VESSEL FORGE</title>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="jjk_style.css">
-  <!-- We can link a modified version of your skillbuilder CSS here later -->
-  <style>
-    /* Basic overrides for the new layout */
-    .char-create-container { max-width: 800px; margin: 2rem auto; padding: 20px; background: #05070a; border: 1px solid #00e5ff; box-shadow: 0 0 20px rgba(0, 229, 255, 0.2); font-family: 'Share Tech Mono', monospace; color: #d0e0f0; }
-    .form-section { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #151d29; }
-    .cc-label { display: block; font-size: 11px; color: #008b99; letter-spacing: 2px; margin-bottom: 8px; text-transform: uppercase; }
-    .cc-input, .cc-select { width: 100%; background: #020304; border: 1px solid #151d29; color: #d0e0f0; padding: 10px; font-family: inherit; margin-bottom: 10px; box-sizing: border-box; }
-    .cc-input:focus, .cc-select:focus { border-color: #00e5ff; outline: none; }
-    .btn-forge { background: rgba(191, 0, 255, 0.1); border: 1px solid #bf00ff; color: #bf00ff; padding: 12px; width: 100%; cursor: pointer; font-family: inherit; font-size: 14px; letter-spacing: 2px; transition: 0.2s; }
-    .btn-forge:hover { background: #bf00ff; color: #fff; box-shadow: 0 0 15px #bf00ff; }
-    .btn-start { background: rgba(0, 229, 255, 0.1); border: 1px solid #00e5ff; color: #00e5ff; padding: 14px; width: 100%; cursor: pointer; font-family: inherit; font-size: 16px; letter-spacing: 2px; transition: 0.2s; margin-top: 20px; }
-    .btn-start:hover { background: #00e5ff; color: #000; box-shadow: 0 0 20px #00e5ff; }
-    .hidden { display: none !important; }
-    
-    /* BitLife Game UI */
-    #gameScreen { display: none; max-width: 900px; margin: 0 auto; height: 100vh; flex-direction: column; background: #020304; color: #d0e0f0; font-family: 'Share Tech Mono'; }
-    .header-stats { display: flex; justify-content: space-between; padding: 15px; background: #05070a; border-bottom: 1px solid #151d29; }
-    .stat-box { text-align: center; }
-    .stat-label { font-size: 10px; color: #008b99; display: block; }
-    .stat-val { font-family: 'VT323'; font-size: 24px; color: #00e5ff; }
-    .timeline-log { flex: 1; overflow-y: auto; padding: 20px; }
-    .timeline-entry { margin-bottom: 15px; padding-left: 15px; border-left: 2px solid #151d29; }
-    .timeline-age { font-size: 10px; color: #bf00ff; margin-bottom: 4px; display: block; }
-    .action-bar { padding: 20px; background: #05070a; border-top: 1px solid #151d29; }
-    .time-slider-container { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JJK: CYBER VESSEL // FORGE OS</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<!-- CHARACTER CREATION -->
-<div id="charCreateScreen">
-  <div class="char-create-container">
-    <h1 style="font-family: 'VT323'; font-size: 32px; color: #00e5ff; margin-top: 0; text-align: center;">VESSEL INITIALIZATION</h1>
-    
-    <!-- Identity -->
-    <div class="form-section">
-      <label class="cc-label">FIRST NAME</label>
-      <input type="text" id="ccFirstName" class="cc-input" placeholder="e.g. Kenji, Akira, Yuki...">
-      
-      <label class="cc-label">CLAN / LINEAGE (LAST NAME)</label>
-      <select id="ccClan" class="cc-select" onchange="toggleClanForge()">
-        <option value="random">Civilian (Random Last Name)</option>
-        <option value="Zenin">Zenin Clan</option>
-        <option value="Gojo">Gojo Clan</option>
-        <option value="Kamo">Kamo Clan</option>
-        <option value="Inumaki">Inumaki Clan</option>
-        <option value="custom">-- FORGE CUSTOM CLAN --</option>
-      </select>
+<!-- FORGE SCREEN -->
+<div id="screen-forge" class="screen active">
+  <div class="forge-panel">
+    <div class="forge-hdr">
+      <div>
+        <div class="corner-tag">JUJUTSU OS // NEURAL WEAVE STUDIO</div>
+        <div class="forge-title">// VESSEL FORGE //</div>
+      </div>
+      <button id="btn-awaken" class="forge-btn-awaken" disabled>SYNCHRONIZE & AWAKEN</button>
+    </div>
+    <div class="forge-body">
+      <!-- LEFT: CLAN BUILDER -->
+      <div class="forge-col border-right">
+        <div class="section-title">1. CLAN & IDENTITY</div>
+        
+        <div class="field">
+          <label>FIRST NAME</label>
+          <input type="text" id="fName" placeholder="e.g., Yuji">
+        </div>
+        
+        <div class="field" style="margin-top:10px;">
+          <label>CLAN SELECTION</label>
+          <select id="fClanType">
+            <option value="none">No Clan (Random Last Name)</option>
+            <option value="zenin">Zenin Clan</option>
+            <option value="gojo">Gojo Clan</option>
+            <option value="kamo">Kamo Clan</option>
+            <option value="custom">-- FORGE CUSTOM CLAN --</option>
+          </select>
+        </div>
 
-      <div id="customClanPanel" class="hidden" style="padding: 15px; border: 1px dashed #008b99; margin-bottom: 10px;">
-        <label class="cc-label">CUSTOM CLAN NAME</label>
-        <input type="text" id="ccCustomClanName" class="cc-input" placeholder="e.g. Watanabe">
-        <label class="cc-label">INHERITED BLOODLINE TRAIT</label>
-        <select id="ccCustomClanTrait" class="cc-select">
-          <option value="immense_ce">Deep Reserves (+Max CE)</option>
-          <option value="heavenly">Heavenly Restriction (0 CE, Godlike Physicals)</option>
-          <option value="rct_talent">RCT Affinity (Easier time learning healing)</option>
-        </select>
+        <div id="custom-clan-box" class="custom-box" style="display:none;">
+          <div class="field">
+            <label>CUSTOM CLAN NAME</label>
+            <input type="text" id="fCustomClanName" placeholder="e.g., Ryomen">
+          </div>
+          <div class="field">
+            <label>CLAN LORE</label>
+            <textarea id="fClanLore" rows="2" placeholder="Describe the clan's history..."></textarea>
+          </div>
+          <div class="field">
+            <label>BLOODLINE TRAIT</label>
+            <input type="text" id="fClanTrait" placeholder="e.g., Six Eyes, Heavenly Restriction">
+          </div>
+          
+          <label style="margin-top:10px; display:block;">CLAN MODIFIERS</label>
+          <div class="slider-row"><label>FLAT CE (+)</label><input type="range" id="fCeFlat" min="0" max="1000" value="0"><span id="vCeFlat">0</span></div>
+          <div class="slider-row"><label>CE MULTIPLIER (%)</label><input type="range" id="fCePerc" min="100" max="300" value="100"><span id="vCePerc">100%</span></div>
+          <div class="slider-row"><label>STR MOD</label><input type="range" id="fStr" min="-5" max="15" value="0"><span id="vStr">0</span></div>
+          <div class="slider-row"><label>SPD MOD</label><input type="range" id="fSpd" min="-5" max="15" value="0"><span id="vSpd">0</span></div>
+          <div class="slider-row"><label>END MOD</label><input type="range" id="fEnd" min="-5" max="15" value="0"><span id="vEnd">0</span></div>
+          <div class="slider-row"><label>MST (MASTERY) MOD</label><input type="range" id="fMst" min="-5" max="15" value="0"><span id="vMst">0</span></div>
+        </div>
+      </div>
+
+      <!-- RIGHT: TECHNIQUE BUILDER -->
+      <div class="forge-col">
+        <div class="section-title">2. INNATE TECHNIQUE (ATOMIC BUILDER)</div>
+        <div class="field">
+          <label>TECHNIQUE NAME</label>
+          <input type="text" id="fTechName" placeholder="e.g., Limitless, Boogie Woogie">
+        </div>
+        <div class="field">
+          <label>TECHNIQUE DESC</label>
+          <textarea id="fTechDesc" rows="2" placeholder="What does it do?"></textarea>
+        </div>
+        
+        <div style="display:flex; gap:10px; margin-top:10px;">
+          <div class="field" style="flex:1;">
+            <label>CE COST</label>
+            <input type="number" id="fTechCost" value="20" min="0">
+          </div>
+          <div class="field" style="flex:1;">
+            <label>COOLDOWN (TURNS)</label>
+            <input type="number" id="fTechCd" value="0" min="0">
+          </div>
+        </div>
+
+        <div class="section-title" style="margin-top:15px; border:none; padding:0;">ATOMIC EFFECTS</div>
+        <div id="atomic-blocks" class="atomic-blocks"></div>
+        <div style="display:flex; gap:5px; margin-top:10px; flex-wrap:wrap;">
+          <button class="atomic-add-btn" onclick="Forge.addAtomic('damage')">+ DMG</button>
+          <button class="atomic-add-btn" onclick="Forge.addAtomic('heal')">+ HEAL</button>
+          <button class="atomic-add-btn" onclick="Forge.addAtomic('buff')">+ BUFF</button>
+          <button class="atomic-add-btn" onclick="Forge.addAtomic('debuff')">+ DEBUFF</button>
+          <button class="atomic-add-btn" onclick="Forge.addAtomic('stun')">+ STUN</button>
+          <button class="atomic-add-btn" onclick="Forge.addAtomic('domain')">+ DOMAIN</button>
+        </div>
       </div>
     </div>
-
-    <!-- History & Awakening -->
-    <div class="form-section">
-      <label class="cc-label">UPBRINGING</label>
-      <select id="ccUpbringing" class="cc-select">
-        <option value="sheltered">Sheltered Civilian (Balanced, low starting trauma)</option>
-        <option value="slums">Slum Scavenger (High survivability, low resources)</option>
-        <option value="cult">Curse User Cult (High combat knowledge, negative reputation)</option>
-        <option value="traditional">Traditional Sorcerer Family (High mastery, immense pressure)</option>
-      </select>
-
-      <label class="cc-label">CURSED ENERGY EXPOSURE (AWAKENING)</label>
-      <select id="ccExposure" class="cc-select">
-        <option value="birth">Innate Awareness (Saw curses since birth)</option>
-        <option value="trauma">Near-Death Experience (Awakened during a fatal incident)</option>
-        <option value="ingestion">Cursed Object Ingestion (Forced awakening, volatile CE)</option>
-        <option value="curse_attack">Survivor of a Curse Attack (High fear, high drive)</option>
-      </select>
-    </div>
-
-    <!-- Technique Forge -->
-    <div class="form-section" style="border: none;">
-      <label class="cc-label">INNATE CURSED TECHNIQUE</label>
-      <button class="btn-forge" id="btnForgeCT">⚙ OPEN TECHNIQUE FORGE</button>
-      <div id="ctStatus" style="font-size: 11px; color: #525a66; margin-top: 8px; text-align: center;">No custom technique forged. Defaulting to raw CE manipulation.</div>
-    </div>
-
-    <button id="btnAwaken" class="btn-start">SYNCHRONIZE & START LIFELINE</button>
   </div>
 </div>
 
-<!-- GAME UI (BITLIFE STYLE) -->
-<div id="gameScreen">
-  <div class="header-stats">
-    <div class="stat-box"><span class="stat-label">NAME</span><span class="stat-val" id="uiName" style="color:#d0e0f0;">Subject</span></div>
-    <div class="stat-box"><span class="stat-label">AGE</span><span class="stat-val" id="uiAge">15</span></div>
-    <div class="stat-box"><span class="stat-label">HP</span><span class="stat-val" id="uiHp" style="color:#ff2a55;">100/100</span></div>
-    <div class="stat-box"><span class="stat-label">CE</span><span class="stat-val" id="uiCe">50/50</span></div>
-    <div class="stat-box"><span class="stat-label">GRADE</span><span class="stat-val" id="uiGrade">4</span></div>
-    <div class="stat-box"><span class="stat-label">YEN</span><span class="stat-val" id="uiYen" style="color:#ffb300;">0</span></div>
-  </div>
-
-  <div class="timeline-log" id="timelineLog">
-    <!-- Life events populate here -->
-  </div>
-
-  <div class="action-bar">
-    <div class="time-slider-container">
-      <div style="width: 80px;"><span class="stat-label">PASS TIME</span></div>
-      <input type="range" id="timeSlider" min="1" max="12" value="1" style="flex: 1;">
-      <div style="width: 70px; text-align: right;"><span id="timeVal" style="font-family:'VT323'; font-size:20px; color:#00e5ff;">1 MO</span></div>
-      <button class="btn-start" id="btnPassTime" style="margin-top: 0; width: auto; padding: 10px 20px;">ADVANCE</button>
+<!-- GAME SCREEN -->
+<div id="screen-game" class="screen">
+  
+  <!-- SIDEBAR (STATS & NPCS) -->
+  <div class="sidebar">
+    <div class="sb-header" id="ui-name">Yuji Itadori</div>
+    <div class="sb-section">
+      <div class="sb-title">STATUS</div>
+      <div class="stat-row"><label>AGE</label><span id="ui-age">15 yrs 0 mo</span></div>
+      <div class="stat-row"><label>YEN</label><span id="ui-yen" class="txt-green">0</span></div>
+      <div class="stat-row"><label>GRADE</label><span id="ui-grade" class="txt-purple">Grade 4</span></div>
+      <div class="stat-row"><label>KARMA</label><span id="ui-karma">0</span></div>
     </div>
-    <div style="display: flex; gap: 10px;">
-      <button class="btn-forge" style="flex:1; border-color:#008b99; color:#008b99;">TRAIN STATS</button>
-      <button class="btn-forge" style="flex:1; border-color:#008b99; color:#008b99;">RELATIONSHIPS</button>
-      <button class="btn-forge" style="flex:1; border-color:#ff2a55; color:#ff2a55;">HUNT CURSES</button>
+    
+    <div class="sb-section">
+      <div class="sb-title">VITALS</div>
+      <div class="bar-row"><label>HP</label><div class="bar"><div class="fill bg-red" id="ui-hp-fill"></div></div><span id="ui-hp-txt">100/100</span></div>
+      <div class="bar-row"><label>CE</label><div class="bar"><div class="fill bg-cyan" id="ui-ce-fill"></div></div><span id="ui-ce-txt">100/100</span></div>
+    </div>
+
+    <div class="sb-section">
+      <div class="sb-title">ATTRIBUTES</div>
+      <div class="stat-row"><label>STR (Power)</label><span id="ui-str">10</span></div>
+      <div class="stat-row"><label>SPD (Turn/Dodge)</label><span id="ui-spd">10</span></div>
+      <div class="stat-row"><label>END (Defense/HP)</label><span id="ui-end">10</span></div>
+      <div class="stat-row"><label>MST (CE/Tech)</label><span id="ui-mst" class="txt-cyan">10</span></div>
+    </div>
+    
+    <div class="sb-section" style="flex:1; display:flex; flex-direction:column; overflow:hidden;">
+      <div class="sb-title">RELATIONSHIPS</div>
+      <div id="ui-npcs" class="npc-list"></div>
+    </div>
+  </div>
+
+  <!-- MAIN AREA (TIMELINE & ACTIONS) -->
+  <div class="main-area">
+    <div class="timeline" id="ui-timeline">
+      <div class="log-entry sys">Life initialized. Your journey begins.</div>
+    </div>
+    
+    <div class="action-bar">
+      <div style="display:flex; flex-direction:column; gap:5px; flex:1;">
+        <label style="font-size:10px; color:var(--text-lo); letter-spacing:2px;">ADVANCE TIME (MONTHS)</label>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <input type="range" id="timeSlider" min="1" max="12" value="1" style="flex:1;">
+          <span id="timeVal" style="font-family:'VT323'; font-size:24px; color:var(--cyan); width:40px; text-align:right;">1</span>
+        </div>
+      </div>
+      <button class="pass-time-btn" onclick="Engine.passTime()">PASS TIME</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- COMBAT OVERLAY -->
+<div id="combat-overlay" class="overlay">
+  <div class="combat-panel">
+    <div class="combat-hdr">
+      <div style="font-family:'VT323'; font-size:24px; color:var(--red);">COMBAT ENGAGED</div>
+      <div id="combat-turn-display" style="font-size:14px; letter-spacing:2px;">TURN: PLAYER</div>
+    </div>
+    
+    <div class="combat-body">
+      <div class="combat-entities">
+        <!-- Player -->
+        <div class="c-entity">
+          <div class="c-name txt-cyan" id="cb-player-name">Player</div>
+          <div class="bar-row"><label>HP</label><div class="bar"><div class="fill bg-red" id="cb-player-hp-f"></div></div><span id="cb-player-hp-t">100/100</span></div>
+          <div class="bar-row"><label>CE</label><div class="bar"><div class="fill bg-cyan" id="cb-player-ce-f"></div></div><span id="cb-player-ce-t">100/100</span></div>
+          <div id="cb-player-status" class="status-row"></div>
+        </div>
+        <div style="font-family:'VT323'; font-size:32px; color:var(--text-lo);">VS</div>
+        <!-- Enemy -->
+        <div class="c-entity" id="cb-enemy-box">
+          <div class="c-name txt-red" id="cb-enemy-name">Cursed Spirit</div>
+          <div class="bar-row"><label>HP</label><div class="bar"><div class="fill bg-red" id="cb-enemy-hp-f"></div></div><span id="cb-enemy-hp-t">100/100</span></div>
+          <div id="cb-enemy-status" class="status-row"></div>
+        </div>
+      </div>
+      
+      <div class="combat-log" id="combat-log"></div>
+      
+      <div class="combat-actions" id="combat-actions">
+        <!-- Skills injected here -->
+      </div>
     </div>
   </div>
 </div>
 
-<script src="jjk_engine.js"></script>
-<script src="jjk_skillBuilder.js"></script>
+<script src="state.js"></script>
+<script src="forge.js"></script>
+<script src="combat.js"></script>
+<script src="engine.js"></script>
 </body>
 </html>
