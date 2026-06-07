@@ -1,0 +1,6 @@
+{
+  "name": "Jujutsu Life Simulator",
+  "description": "An immersive Jujutsu Kaisen life simulator with age-up dialogue choices, clan lineages, inherited techniques, and cursed encounters.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
